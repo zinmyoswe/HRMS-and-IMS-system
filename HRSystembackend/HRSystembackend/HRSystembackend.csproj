@@ -7,8 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.7" />
   </ItemGroup>
+  <!-- Swashbuckle removed because some environments block its assemblies via OS/App Control policies.
+       If you want OpenAPI, add the package back and ensure the runtime can load assemblies. -->
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.13" />

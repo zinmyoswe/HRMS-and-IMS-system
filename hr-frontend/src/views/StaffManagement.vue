@@ -80,6 +80,14 @@
           </template>
         </el-table-column>
 
+        <el-table-column label="Position" width="180">
+          <template #default="{ row }">
+            <el-tag effect="light" round class="position-tag">
+              {{ getPositionName(row.positionId) }}
+            </el-tag>
+          </template>
+        </el-table-column>
+
         <el-table-column label="Status" width="120">
           <template #default="{ row }">
             <div :class="['status-indicator', row.isActive ? 'active' : 'inactive']">
@@ -142,6 +150,17 @@
             </el-select>
           </el-form-item>
 
+          <el-form-item label="Position" prop="positionId">
+            <el-select v-model="formData.positionId" placeholder="Select" style="width: 100%">
+              <el-option
+                v-for="pos in positions"
+                :key="pos.positionId"
+                :label="pos.positionName"
+                :value="pos.positionId"
+              />
+            </el-select>
+          </el-form-item>
+
           <el-form-item label="Joined Date" prop="joinedDate">
             <el-date-picker v-model="formData.joinedDate" type="date" style="width: 100%" />
           </el-form-item>
@@ -184,12 +203,14 @@ import {
 // Replace these imports with your actual paths
 import { staffService } from '../services/staffService';
 import { departmentService } from '../services/departmentService';
-import type { Staff, Department } from '../types';
+import { positionService } from '../services/positionService';
+import type { Staff, Department, Position } from '../types';
 
 // --- State Management ---
 const staffList = ref<Staff[]>([]);
 const displayedStaff = ref<Staff[]>([]);
 const departments = ref<Department[]>([]);
+const positions = ref<Position[]>([]);
 const loading = ref(false);
 const showCreateDialog = ref(false);
 const editingStaff = ref<Staff | null>(null);
@@ -207,6 +228,7 @@ const formData = ref({
   dateOfBirth: null as any,
   joinedDate: new Date(),
   departmentId: null as any,
+  positionId: null as any,
   isActive: true,
 });
 
@@ -224,6 +246,7 @@ const rules = {
 onMounted(async () => {
   await loadStaff();
   await loadDepartments();
+  await loadPositions();
 });
 
 // --- Methods ---
@@ -247,9 +270,22 @@ const loadDepartments = async () => {
   }
 };
 
+const loadPositions = async () => {
+  try {
+    positions.value = await positionService.getAll();
+  } catch (error) {
+    console.error('Failed to load positions');
+  }
+};
+
 const getDepartmentName = (id: number | undefined) => {
   if (!id) return 'Unassigned';
   return departments.value.find((d) => d.departmentId === id)?.departmentName || 'Unknown';
+};
+
+const getPositionName = (id: number | undefined) => {
+  if (!id) return 'Unassigned';
+  return positions.value.find((p) => p.positionId === id)?.positionName || 'Unknown';
 };
 
 const handleSearch = () => applyFilters();
@@ -332,6 +368,7 @@ const resetForm = () => {
     dateOfBirth: null,
     joinedDate: new Date(),
     departmentId: null,
+    positionId: null,
     isActive: true,
   };
 };
@@ -412,6 +449,9 @@ const resetForm = () => {
 .active .dot { background-color: #10b981; }
 .inactive { color: #ef4444; }
 .inactive .dot { background-color: #ef4444; }
+
+.dept-tag { background-color: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
+.position-tag { background-color: #f0fdf4; color: #166534; border-color: #bbf7d0; }
 
 .form-grid {
   display: grid;
