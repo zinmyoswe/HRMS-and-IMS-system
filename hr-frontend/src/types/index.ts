@@ -13,6 +13,23 @@ export interface Staff {
   isActive: boolean;
 }
 
+export interface Device {
+  deviceId: number;
+  dept?: string;
+  deviceType?: string;
+  brand?: string;
+  model?: string;
+  fixedAssets?: string;
+  greenLabel?: string;
+  deviceName?: string;
+  serialNumber?: string;
+  macAddress?: string;
+  ipAddress?: string;
+  remark1?: string;
+  remark2?: string;
+  createdAt?: Date | string;
+}
+
 export interface Department {
   departmentId: number;
   departmentName: string;

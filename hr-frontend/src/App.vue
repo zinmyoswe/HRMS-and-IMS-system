@@ -9,7 +9,9 @@ import {
   Calendar,
   Bell,
   Search,
-  ArrowDown
+  ArrowDown,
+  Switch,
+  
 } from '@element-plus/icons-vue';
 
 const route = useRoute();
@@ -25,8 +27,9 @@ const pageTitle = computed(() => {
     '/': 'Dashboard Overview',
     '/staff': 'Staff Directory',
     '/departments': 'Organization Units',
+    '/devices': 'Device Inventory',
     '/payroll': 'Payroll Management',
-    '/attendance': 'Attendance Tracking'
+    '/attendance': 'Attendance Tracking',
   };
   return titles[route.path] || 'Management System';
 });
@@ -66,6 +69,7 @@ const pageTitle = computed(() => {
             <span>Departments</span>
           </el-menu-item>
 
+
           <div class="menu-label">Financials & Operations</div>
 
           <el-menu-item index="/payroll">
@@ -76,6 +80,15 @@ const pageTitle = computed(() => {
           <el-menu-item index="/attendance">
             <el-icon><Calendar /></el-icon>
             <span>Attendance</span>
+          </el-menu-item>
+
+          
+
+          <div class="menu-label">IMS Management</div>
+
+          <el-menu-item index="/devices">
+            <el-icon><Switch /></el-icon>
+            <span>Devices</span>
           </el-menu-item>
         </el-menu>
       </el-scrollbar>
@@ -199,9 +212,9 @@ const pageTitle = computed(() => {
 }
 
 :deep(.el-menu-item.is-active) {
-  background-color: #3b82f6 !important; /* Modern Blue */
+
   color: #fff !important;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+  /* box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25); */
 }
 
 .sidebar-footer {

@@ -30,5 +30,6 @@ namespace HRSystembackend.Models
         public ICollection<SalaryStructure>? SalaryStructures { get; set; }
         public ICollection<Payroll>? Payrolls { get; set; }
         public ICollection<StaffAllowance>? StaffAllowances { get; set; }
+        // Monitor navigation removed (monitor-related files deleted)
     }
 }

@@ -313,3 +313,76 @@ BEGIN
 END
 
 GO
+
+
+----------------------------------------
+----------------------------------------
+---------------------------------------
+-- Monitor
+
+CREATE TABLE dbo.Monitors (
+    MonitorId INT IDENTITY(1,1) PRIMARY KEY,
+
+    DeviceName NVARCHAR(50) NOT NULL,           -- MN001, MN002
+    ServiceTag NVARCHAR(50) NOT NULL UNIQUE,    -- Dell Service Tag
+    ExpressServiceCode NVARCHAR(50),
+
+    Model NVARCHAR(100),
+
+    WarrantyEndDate DATE,                       -- extracted date only
+    WarrantyText NVARCHAR(100),                 -- original text (optional)
+
+    AssignedUser NVARCHAR(150),                 -- User name
+
+    Remark NVARCHAR(255),
+
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    UpdatedAt DATETIME NULL
+);
+
+
+CREATE TABLE dbo.Monitors (
+    MonitorId INT IDENTITY(1,1) PRIMARY KEY,
+
+    DeviceName NVARCHAR(50) NOT NULL,           
+    ServiceTag NVARCHAR(50) NOT NULL UNIQUE,    
+    ExpressServiceCode NVARCHAR(50),
+
+    Model NVARCHAR(100),
+
+    WarrantyEndDate DATE,                       
+    WarrantyText NVARCHAR(100),                 
+
+    StaffId INT,                                -- FK to Staff table
+
+    Remark NVARCHAR(255),
+
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    UpdatedAt DATETIME NULL,
+
+    CONSTRAINT FK_Monitors_Staff
+        FOREIGN KEY (StaffId) REFERENCES dbo.Staff(StaffId)
+);
+
+
+------------------------------------------
+-------------------------------------------
+
+-- Create the Device Table
+CREATE TABLE [dbo].[Devices] (
+    [DeviceID] INT IDENTITY(1,1) PRIMARY KEY,
+    [Dept] NVARCHAR(50),
+    [DeviceType] NVARCHAR(50),
+    [Brand] NVARCHAR(50),
+    [Model] NVARCHAR(50),
+    [FixedAssets] NVARCHAR(50),
+    [GreenLabel] NVARCHAR(50),
+    [DeviceName] NVARCHAR(100),
+    [SerialNumber] NVARCHAR(100),
+    [MACAddress] NVARCHAR(50),
+    [IPAddress] NVARCHAR(50),
+    [Remark1] NVARCHAR(MAX),
+    [Remark2] NVARCHAR(MAX),
+    [CreatedAt] DATETIME DEFAULT GETDATE()
+);
+GO

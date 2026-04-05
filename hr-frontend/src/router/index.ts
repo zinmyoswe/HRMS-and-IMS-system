@@ -5,6 +5,7 @@ import type { RouteRecordRaw } from 'vue-router';
 const Dashboard = () => import('../views/Dashboard.vue');
 const StaffManagement = () => import('../views/StaffManagement.vue');
 const DepartmentManagement = () => import('../views/DepartmentManagement.vue');
+const DeviceManagement = () => import('../views/DeviceManagement.vue');
 const PayrollManagement = () => import('../views/PayrollManagement.vue');
 const AttendanceManagement = () => import('../views/AttendanceManagement.vue');
 
@@ -23,6 +24,11 @@ const routes: RouteRecordRaw[] = [
     path: '/departments',
     name: 'DepartmentManagement',
     component: DepartmentManagement,
+  },
+  {
+    path: '/devices',
+    name: 'DeviceManagement',
+    component: DeviceManagement,
   },
   {
     path: '/payroll',

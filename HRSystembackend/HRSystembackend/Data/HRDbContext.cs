@@ -21,6 +21,8 @@ namespace HRSystembackend.Data
         public DbSet<AllowanceType> AllowanceTypes => Set<AllowanceType>();
         public DbSet<StaffAllowance> StaffAllowances => Set<StaffAllowance>();
         public DbSet<DeductionType> DeductionTypes => Set<DeductionType>();
+        public DbSet<Device> Devices => Set<Device>();
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -159,6 +161,29 @@ namespace HRSystembackend.Data
                 entity.Property(e => e.Name).IsRequired().HasMaxLength(200);
             });
 
+            // Device
+            modelBuilder.Entity<Device>(entity =>
+            {
+                entity.ToTable("Devices");
+                entity.HasKey(e => e.DeviceId);
+                entity.Property(e => e.DeviceId).HasColumnName("DeviceID");
+                entity.Property(e => e.Dept).HasMaxLength(50);
+                entity.Property(e => e.DeviceType).HasMaxLength(50);
+                entity.Property(e => e.Brand).HasMaxLength(50);
+                entity.Property(e => e.Model).HasMaxLength(50);
+                entity.Property(e => e.FixedAssets).HasMaxLength(50);
+                entity.Property(e => e.GreenLabel).HasMaxLength(50);
+                entity.Property(e => e.DeviceName).HasMaxLength(100);
+                entity.Property(e => e.SerialNumber).HasMaxLength(100);
+                entity.Property(e => e.MACAddress).HasMaxLength(50);
+                entity.Property(e => e.IPAddress).HasMaxLength(50);
+                entity.Property(e => e.Remark1);
+                entity.Property(e => e.Remark2);
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETDATE()");
+            });
+
+            // Monitor entity removed (monitor-related types/files deleted)
+
             // Seed sample data
             modelBuilder.Entity<Department>().HasData(
                 new Department { DepartmentId = 1, DepartmentName = "Human Resources" },
@@ -205,6 +230,8 @@ namespace HRSystembackend.Data
                     UpdatedDate = DateTime.UtcNow
                 }
             );
+
+            // Monitor seed removed
 
             modelBuilder.Entity<StaffRole>().HasData(
                 new StaffRole { StaffId = 1, RoleId = 1 },
